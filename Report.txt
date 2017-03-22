@@ -1,0 +1,16 @@
+!!! My polybox account stated 'Not allowed because you don't have permission to add parent folder', so I uploaded the code to a git repo where you could just clone it. I hope this works out for you, please contact me if not.
+
+
+
+Description:
+The first step is to extract the descriptors from the train- and the test images images. The images get cropped and the available mask is applied to the depth image from the data set. On these images a grid of equally distributed keypoints gets distributed.
+On each of those keypoints, a SIFT descriptor gets extracted. These descriptors are then stored in a 1D array and can be written to a file.
+
+The second routine takes the descriptors and performs a SVM gridsearch. A 10 fold cross validation is used here. The best found estimator can be written to file.
+
+As a last step, a routine takes the descriptors of the test data and applies the best estimator found in the past step.
+
+
+As it turned out, these decisions were not the best. While the performance increased using small parts of the data set, it decreased again as more data (80% of the train data) was used for training. The run on these 80% took very long time (about 55 hours on the azure using 8 cores), but as mentioned this run performed worse than the one before, using just 25% of the train data.
+
+It would have been better to use a 'lighter' descriptor, such as hog, further, he random forest method could have been more promising.
